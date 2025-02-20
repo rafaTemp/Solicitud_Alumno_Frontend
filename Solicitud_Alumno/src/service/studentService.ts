@@ -11,6 +11,7 @@ export const getStudents = async () => {
     const response = await api.get(API_URL, {
       headers: { Authorization: `Bearer ${getAuthToken()}` }
     });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error al obtener los estudiantes:", error);

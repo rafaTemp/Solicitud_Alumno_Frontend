@@ -8,6 +8,7 @@ import Request from './components/Request';
 import StudentList from './components/student/StudentList';
 import StudentDetail from './components/student/StudentDetail';
 import Navbar from './components/Nabvar';
+import StudentUpdate from './components/student/StudentUpdate';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/request" element={<PrivateRoute element={<Request />} requiredRole="student" />} />
           <Route path="/student" element={<StudentList/>} /> 
           <Route path="/student/:id" element={<StudentDetail/>} />
+          <Route path="/student/:id/edit" element={<StudentUpdate />} />
           <Route path="/" element={<Login />} />
         </Routes>
  
