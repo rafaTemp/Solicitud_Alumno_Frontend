@@ -5,19 +5,26 @@ import { AuthProvider } from './components/AuthContexType';
 import CompanyList from './components/CompanyList';
 import Request from './components/Request';
 
+import StudentList from './components/student/StudentList';
+import StudentDetail from './components/student/StudentDetail';
+import Navbar from './components/Nabvar';
+
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Navbar/>
+     
         <Routes>
           <Route path="/login" element={<Login />} />
           {/* CompanyList ahora es pública */}
           <Route path="/company" element={<CompanyList onCompaniesLoaded={() => {}} />} />
           {/* Request solo accesible para estudiantes */}
           <Route path="/request" element={<PrivateRoute element={<Request />} requiredRole="student" />} />
+          <Route path="/student" element={<StudentList/>} /> 
+          <Route path="/student/:id" element={<StudentDetail/>} />
           <Route path="/" element={<Login />} />
         </Routes>
-      </Router>
+ 
     </AuthProvider>
   );
 }

@@ -29,8 +29,12 @@ export default function Login() {
 
       // Llamar a la función login del contexto de autenticación
       login(data.token, role);
-
-      navigate('/'); // Redirige al usuario a la página principal
+  // Redirigir según el rol del usuario
+    if (role === 'teacher') {
+    navigate('/student'); // Redirige al usuario a la página de listas de estudiantes
+  } else {
+    navigate('/request'); // Redirige al usuario a la página principal de estudiantes
+  } 
     } catch (error) {
       setError('Credenciales incorrectas');
       console.error('Error en la autenticación:', error);

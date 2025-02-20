@@ -1,9 +1,11 @@
+// filepath: /c:/Users/franc/OneDrive/Escritorio/Proyecto DWES/FrontendFP_Dual/Solicitud_Alumno_Frontend/Solicitud_Alumno/tailwind.config.js
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/*/.{js,ts,jsx,tsx}"],
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
-
+};

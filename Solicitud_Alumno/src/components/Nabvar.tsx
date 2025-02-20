@@ -24,14 +24,7 @@ const Navbar: React.FC = () => {
               </a>
             </div>
           </div>
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <button className="bg-indigo-500 text-white px-3 py-2 rounded-md text-sm font-medium">
-              Iniciar Sesión
-            </button>
-            <button className="ml-4 bg-gray-100 text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
-              Registrarse
-            </button>
-          </div>
+         
         </div>
       </div>
     </nav>
