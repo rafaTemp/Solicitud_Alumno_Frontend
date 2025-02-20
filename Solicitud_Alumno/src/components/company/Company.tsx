@@ -1,4 +1,4 @@
-import { ICompanyData } from '../interfaces/ICompany';
+import { ICompanyData } from '../../interfaces/ICompany';
 
 
 export default function Company(props:ICompanyData) {
