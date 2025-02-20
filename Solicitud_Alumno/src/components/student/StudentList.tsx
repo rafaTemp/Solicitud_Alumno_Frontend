@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteStudent, getStudents } from "../../service/studentService";
-import { useAuth } from "../AuthContexType";
+import { useAuth } from "../login/AuthContexType";
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<any[]>([]);

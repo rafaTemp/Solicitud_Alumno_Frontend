@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContexType';
-import api from '../api';
+import { useAuth } from '../login/AuthContexType';
+import api from '../../api';
 import Company from './Company';
-import { ICompany, ICompanyData } from '../interfaces/ICompany';
+import { ICompany, ICompanyData } from '../../interfaces/ICompany';
 
 interface CompaniesListProps {
   onCompaniesLoaded: (companies: ICompanyData[]) => void;
