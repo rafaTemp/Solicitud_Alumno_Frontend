@@ -6,9 +6,9 @@ import CompanyList from './components/company/CompanyList';
 
 
 import StudentList from './components/student/StudentList';
-import StudentDetail from './components/student/StudentDetail';
+
 import Navbar from './components/navbar/Nabvar';
-import StudentUpdate from './components/student/StudentUpdate';
+
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -24,8 +24,7 @@ function App() {
           {/* Request solo accesible para estudiantes */}
          
           <Route path="/student" element={<StudentList/>} /> 
-          <Route path="/student/:id" element={<StudentDetail/>} />
-          <Route path="/student/:id/edit" element={<StudentUpdate />} />
+
           <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
  

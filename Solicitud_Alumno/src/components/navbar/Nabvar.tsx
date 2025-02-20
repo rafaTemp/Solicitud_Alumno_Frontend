@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
       if (role === 'student') {
         navigate('/request');
       } else if (role === 'teacher') {
-        navigate('/students');
+        navigate('/student');
       }
     } else {
       navigate('/login');
@@ -65,8 +65,9 @@ const Navbar: React.FC = () => {
     if (role === 'teacher') {
       return (
         <>
-          <Link to="/students" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Estudiantes</Link>
+          <Link to="/student" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Estudiantes</Link>
           <Link to="/perfil" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Perfil</Link>
+          <Link to="/companies" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Empresas</Link>
         </>
       );
     }
