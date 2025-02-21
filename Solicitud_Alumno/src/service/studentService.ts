@@ -33,7 +33,7 @@ export const getStudentById = async (id: number) => {
 
 export const createStudent = async (studentData: any) => {
   try {
-    const response = await api.post(API_URL, studentData, {
+    const response = await api.post(`${API_URL}`, studentData,  {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getAuthToken()}`
