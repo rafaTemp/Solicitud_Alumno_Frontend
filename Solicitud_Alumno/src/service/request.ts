@@ -28,7 +28,7 @@ export const getRequestById = async (id: number) => {
 
 export const createRequest = async (studentId: string, companyId: string, question: string) => {
   try {
-    const response = await api.post('/request', {
+    const response = await api.post('/requests', {
       student_id: studentId,
       company_id: companyId,
       question: question,
