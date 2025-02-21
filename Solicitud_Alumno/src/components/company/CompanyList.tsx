@@ -15,7 +15,6 @@ export default function CompanyList({ onCompaniesLoaded }: CompaniesListProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Esta validación ya se maneja en PrivateRoute, pero la dejamos por seguridad
     if (!isAuthenticated || role !== 'teacher') {
       navigate('/login');
       return;

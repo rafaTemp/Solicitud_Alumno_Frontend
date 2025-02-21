@@ -1,5 +1,5 @@
 export interface IRequest {
   companyId: string;
   question: string;
-  studentId ?: string; // ID del alumno que ha iniciado sesión
+  studentId ?: number; // ID del alumno que ha iniciado sesión
 }
