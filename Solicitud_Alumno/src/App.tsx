@@ -26,7 +26,7 @@ function App() {
           <Route path="/request" element={<PrivateRoute element={<RequestList />} requiredRole="student" />} />
     
           <Route path="/student" element={<StudentList/>} /> 
-          <Route path="request/create" element={<PrivateRoute element={<CreateRequest />} requiredRole="student" />} />
+          <Route path="requests/create" element={<PrivateRoute element={<CreateRequest />} requiredRole="student" />} />
           <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
  
