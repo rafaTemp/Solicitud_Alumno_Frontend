@@ -21,7 +21,7 @@ function App() {
           {/* Request solo accesible para estudiantes */}
           <Route
           path="/request"
-          element={<PrivateRoute element={<Request />} requiredRole="student" />}
+       
            />
           <Route path="/student" element={<StudentList/>} /> 
 
