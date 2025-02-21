@@ -6,8 +6,9 @@ export interface ICompanyData {
 
 }
 
-
 export interface ICompany {
-    data: ICompanyData[];
-
-}
+    id: number;
+    website: string;
+    name: string;
+    NIF: string;
+  }

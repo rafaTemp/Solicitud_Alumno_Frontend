@@ -1,38 +1,37 @@
-import { IStudent } from "../interfaces/IStudent";
+import { ICompanyData } from "../interfaces/ICompany";
 import api from "../api";
 
-const API_URL = "/student";
+const API_URL = "/company";
 
 const getAuthToken = () => localStorage.getItem('authToken');
 
-export const getStudents = async () => {
+export const getCompanies = async (): Promise<ICompanyData[]> => {
   try {
     const response = await api.get(API_URL, {
       headers: { Authorization: `Bearer ${getAuthToken()}` }
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error al obtener los estudiantes:", error);
+    console.error("Error al obtener las compañías:", error);
     throw error;
   }
 };
 
-export const getStudentById = async (id: number) => {
+export const getCompanyById = async (id: number): Promise<ICompanyData> => {
   try {
     const response = await api.get(`${API_URL}/${id}`, {
       headers: { Authorization: `Bearer ${getAuthToken()}` }
     });
     return response.data;
   } catch (error) {
-    console.error("Error al obtener el estudiante:", error);
+    console.error("Error al obtener la compañía:", error);
     throw error;
   }
 };
 
-export const createStudent = async (studentData: any) => {
+export const createCompany = async (companyData: ICompanyData): Promise<ICompanyData> => {
   try {
-    const response = await api.post(`${API_URL}`, studentData,  {
+    const response = await api.post(API_URL, companyData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getAuthToken()}`
@@ -40,14 +39,14 @@ export const createStudent = async (studentData: any) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error al crear el estudiante:", error);
+    console.error("Error al crear la compañía:", error);
     throw error;
   }
 };
 
-export const updateStudent = async (id: number, studentData: Partial<IStudent>): Promise<IStudent> => {
+export const updateCompany = async (id: number, companyData: Partial<ICompanyData>): Promise<ICompanyData> => {
   try {
-    const response = await api.put(`${API_URL}/${id}`, studentData, {
+    const response = await api.put(`${API_URL}/${id}`, companyData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getAuthToken()}`
@@ -55,18 +54,18 @@ export const updateStudent = async (id: number, studentData: Partial<IStudent>):
     });
     return response.data;
   } catch (error) {
-    console.error("Error al actualizar el estudiante:", error);
+    console.error("Error al actualizar la compañía:", error);
     throw error;
   }
 };
 
-export const deleteStudent = async (id: number) => {
+export const deleteCompany = async (id: number): Promise<void> => {
   try {
     await api.delete(`${API_URL}/${id}`, {
       headers: { Authorization: `Bearer ${getAuthToken()}` }
     });
   } catch (error) {
-    console.error("Error al eliminar el estudiante:", error);
+    console.error("Error al eliminar la compañía:", error);
     throw error;
   }
 };

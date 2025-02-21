@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../login/AuthContexType';
 import api from '../../api';
 import Company from './Company';
@@ -12,27 +12,33 @@ interface CompaniesListProps {
 export default function CompanyList({ onCompaniesLoaded }: CompaniesListProps) {
   const [companies, setCompanies] = useState<ICompanyData[]>([]);
   const { isAuthenticated, role } = useAuth();
-  const navigate = useNavigate();
+  const history = useHistory();
 
   useEffect(() => {
     if (!isAuthenticated || role !== 'teacher') {
-      navigate('/login');
+      history.push('/login');
       return;
     }
 
-    api.get<ICompany>('/company')
-      .then(response => {
-        if (Array.isArray(response.data.data)) {
-          setCompanies(response.data.data);
-          onCompaniesLoaded(response.data.data);
-        } else {
-          console.error('Unexpected response data:', response.data);
-        }
+    api.get<ICompanyResponse>('/company')
+      .then((response: ICompanyResponse) => {
+      if (Array.isArray(response.data.data)) {
+        setCompanies(response.data.data);
+        onCompaniesLoaded(response.data.data);
+      } else {
+        console.error('Unexpected response data:', response.data);
+      }
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error: unknown) => {
+      console.error('Error fetching data:', error);
       });
-  }, [isAuthenticated, role, navigate, onCompaniesLoaded]);
+
+  interface ICompanyResponse {
+    data: {
+    data: ICompanyData[];
+    };
+  }
+  }, [isAuthenticated, role, history, onCompaniesLoaded]);
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
