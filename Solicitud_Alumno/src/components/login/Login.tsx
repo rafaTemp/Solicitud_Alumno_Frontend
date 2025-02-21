@@ -28,7 +28,9 @@ export default function Login() {
       // Redirigir según el rol del usuario
       if (role === 'teacher') {
         navigate('/student'); // Redirige al usuario a la página de listas de estudiantes
-      } else {
+      } else if (role === 'student') {
+        navigate('/request');
+      }else{ // Redirige al usuario a la página de solicitudes
         navigate('/login'); // Redirige al usuario a la página principal de estudiantes
       }
     } catch (error) {
