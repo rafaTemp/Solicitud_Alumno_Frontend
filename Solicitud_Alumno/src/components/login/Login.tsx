@@ -21,6 +21,8 @@ export default function Login() {
       // Almacenar el token y el rol en localStorage
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('role', role);
+      localStorage.setItem('userId', data.user.id);
+      
 
       // Llamar a la función login del contexto de autenticación
       login(data.token, role);
