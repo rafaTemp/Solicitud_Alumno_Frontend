@@ -80,8 +80,9 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex justify-between h-16">
           <div className="flex-1 flex items-center sm:items-stretch sm:justify-start">
-            <button onClick={handleLogoClick} className="text-xl font-bold text-gray-900">
-              Mi Aplicación
+            <button onClick={handleLogoClick} className="text-xl font-bold text-gray-900 flex items-center">
+            <img src="logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+              Solicitud Alumnos
             </button>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {renderLinks()}
