@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteStudent, getStudents, updateStudent, getStudentById, createStudent } from "../../service/studentService";
+import { deleteStudent, getStudents, updateStudent, getStudentById, createStudent, getStudentRequests } from "../../service/studentService";
 import { useAuth } from "../login/AuthContexType";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<any[]>([]);
   const [selectedStudent, setSelectedStudent] = useState<any | null>(null);
+  const [studentRequests, setStudentRequests] = useState<any[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [errors, setErrors] = useState<any>({});
@@ -41,10 +42,15 @@ const StudentList: React.FC = () => {
   const toggleStudentInfo = async (id: number) => {
     if (selectedStudent && selectedStudent.id === id) {
       setSelectedStudent(null);
+      setStudentRequests([]);
     } else {
       try {
         const student = await getStudentById(id);
+        const requests = await getStudentRequests(id);
         setSelectedStudent(student);
+        setStudentRequests(requests);
+        console.log("selectedStudent", student);
+        console.log("studentRequests", requests);
       } catch (error) {
         console.error("Error al obtener el estudiante:", error);
       }
@@ -58,6 +64,7 @@ const StudentList: React.FC = () => {
       await toggleStudentInfo(id);
     }
     setIsEditing(true);
+    setIsCreating(false);
   };
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
@@ -91,13 +98,12 @@ const StudentList: React.FC = () => {
   const handleCreateClick = () => {
     setSelectedStudent({ name: "", email: "", dni: "", group: "1-ASIR", course: "24/25", password: "" });
     setIsCreating(true);
-    setIsEditing(true);
+    setIsEditing(false);
     setErrors({});
   };
 
   return (
     <div className="container mx-auto mt-8 p-6 bg-white shadow-xl rounded-lg">
-    
       <button onClick={handleCreateClick} className="mb-4 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 flex items-center">
         Crear Alumno
       </button>
@@ -126,7 +132,7 @@ const StudentList: React.FC = () => {
           ))}
         </nav>
       </div>
-      {selectedStudent && (
+      {selectedStudent && !isCreating && (
         <div className="mt-4 p-6 bg-gray-50 rounded-lg border border-gray-300">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {["name", "email", "dni", "password"].map((field) => (
@@ -179,6 +185,20 @@ const StudentList: React.FC = () => {
               Guardar cambios
             </button>
           )}
+          <div className="mt-6">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">Solicitudes del Estudiante</h3>
+            <ul className="divide-y divide-gray-300">
+              {studentRequests.map((request) => (
+                <li key={request.id} className="p-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-semibold ">{request.company.name}</span>
+                    <span className="text-gray-600">{request.question}</span>
+                  </div>
+               
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
       {isCreating && (

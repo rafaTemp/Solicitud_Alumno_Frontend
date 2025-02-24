@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { deleteCompany } from "../../service/companyService";
 
 const CompanyDelete: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleDelete = async () => {
       try {
         await deleteCompany(Number(id));
-        history.push("/company");
+        navigate("/company");
       } catch (error) {
         console.error("Error al eliminar la compañía:", error);
       }

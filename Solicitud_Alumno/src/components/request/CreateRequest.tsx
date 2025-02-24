@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { createRequest } from '../../service/request';
 import { useAuth } from '../login/AuthContexType';
 import api from '../../api';
-import { ICompanyData } from '../../interfaces/ICompany';
+import { ICompany } from '../../interfaces/ICompany';
 
 const CreateRequest: React.FC = () => {
   const [companyId, setCompanyId] = useState<string>('');
   const [question, setQuestion] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [companies, setCompanies] = useState<ICompanyData[]>([]);
+  const [companies, setCompanies] = useState<ICompany[]>([]);
   const navigate = useNavigate();
   const { isAuthenticated, role } = useAuth();
 

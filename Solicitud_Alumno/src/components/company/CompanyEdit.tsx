@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getCompanyById, updateCompany } from "../../service/companyService";
 import { ICompany } from "../../interfaces/ICompany";
 
 const CompanyEdit: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [company, setCompany] = useState<ICompany>({
     id: 0,
     website: "",
@@ -34,7 +34,7 @@ const CompanyEdit: React.FC = () => {
     e.preventDefault();
     try {
       await updateCompany(Number(id), company);
-      history.push("/company");
+      navigate("/company");
     } catch (error) {
       console.error("Error al actualizar la compañía:", error);
     }

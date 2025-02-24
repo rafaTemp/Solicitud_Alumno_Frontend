@@ -22,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           {/* CompanyList ahora es pública */}
           <Route path="/company" element={<CompanyList onCompaniesLoaded={() => {}} />} />
+          <Route path="/request" element={<RequestList />} />
           {/* Request solo accesible para estudiantes */}
 
           <Route path="/student" element={<StudentList/>} /> 

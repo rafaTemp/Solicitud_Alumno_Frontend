@@ -66,8 +66,8 @@ const Navbar: React.FC = () => {
       return (
         <>
           <Link to="/student" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Estudiantes</Link>
+          <Link to="/company" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Empresas</Link>
           <Link to="/perfil" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Perfil</Link>
-          <Link to="/companies" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Empresas</Link>
         </>
       );
     }
@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
         <div className="relative flex justify-between h-16">
           <div className="flex-1 flex items-center sm:items-stretch sm:justify-start">
             <button onClick={handleLogoClick} className="text-xl font-bold text-gray-900 flex items-center">
-            <img src="logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+            <img src="\logo.png" alt="Logo" className="h-8 w-8 mr-2" />
               Solicitud Alumnos
             </button>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">

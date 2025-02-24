@@ -70,3 +70,14 @@ export const deleteStudent = async (id: number) => {
     throw error;
   }
 };
+export const getStudentRequests = async (studentId: number): Promise<any[]> => {
+  try {
+    const response = await api.get(`${API_URL}/${studentId}/requests`, {
+      headers: { Authorization: `Bearer ${getAuthToken()}` }
+    });
+    return response.data.data; // Acceder a la propiedad data
+  } catch (error) {
+    console.error("Error al obtener las solicitudes del estudiante:", error);
+    throw error;
+  }
+};

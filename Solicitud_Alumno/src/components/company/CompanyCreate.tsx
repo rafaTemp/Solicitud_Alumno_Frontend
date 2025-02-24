@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createCompany } from "../../service/companyService";
 import { ICompany } from "../../interfaces/ICompany";
 const CompanyCreate: React.FC = () => {
@@ -9,7 +9,7 @@ const CompanyCreate: React.FC = () => {
     name: "",
     NIF: "",
   });
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompany({ ...company, [e.target.name]: e.target.value });
@@ -19,7 +19,7 @@ const CompanyCreate: React.FC = () => {
     e.preventDefault();
     try {
       await createCompany(company);
-      history.push("/company");
+      navigate("/company");
     } catch (error) {
       console.error("Error al crear la compañía:", error);
     }

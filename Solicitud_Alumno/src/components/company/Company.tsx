@@ -1,7 +1,7 @@
-import { ICompanyData } from '../../interfaces/ICompany';
+import { ICompany } from '../../interfaces/ICompany';
 
 
-export default function Company(props:ICompanyData) {
+export default function Company(props:ICompany) {
   return (
     <>
       <p>NIF: {props.NIF}</p>

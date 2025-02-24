@@ -45,7 +45,7 @@ export default function Login() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+          src="/logo.png"
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
@@ -90,11 +90,6 @@ export default function Login() {
               <label htmlFor="password" className="block text-sm font-medium text-gray-900">
                 Password
               </label>
-              <div className="text-sm">
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                  Forgot password?
-                </a>
-              </div>
             </div>
             <div className="mt-2">
               <input
@@ -118,12 +113,8 @@ export default function Login() {
           </div>
         </form>
 
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{' '}
-          <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-            Start a 14 day free trial
-          </a>
-        </p>
+       
+      
       </div>
     </div>
   );
