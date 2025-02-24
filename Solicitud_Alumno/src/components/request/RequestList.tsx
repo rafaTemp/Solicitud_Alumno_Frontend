@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { getStudentRequests, deleteRequest, updateRequest, getRequestById, getStudentById } from '../../service/request';
 import { useAuth } from '../login/AuthContexType';
 import { FaEdit, FaSave, FaTrash, FaPlus } from 'react-icons/fa';
+import api from '../../api';
+import { ICompany } from '../../interfaces/ICompany';
 
 const RequestList: React.FC = () => {
   const [requests, setRequests] = useState<any[]>([]);
   const [selectedRequest, setSelectedRequest] = useState<any | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isCreating, setIsCreating] = useState<boolean>(false);
   const [errors, setErrors] = useState<any>({});
+  const [companies, setCompanies] = useState<ICompany[]>([]);
   const { isAuthenticated, role } = useAuth();
   const navigate = useNavigate();
 
@@ -19,22 +21,28 @@ const RequestList: React.FC = () => {
         const userId = localStorage.getItem('userId');
         if (userId) {
           const response = await getStudentRequests(userId);
-          const data = response.data; // Acceder a la propiedad data
-          if (Array.isArray(data)) {
-            setRequests(data);
-          } else {
-            console.error('La respuesta no es un array:', data);
-            setRequests([]);
-          }
+          const data = response.data;
+          setRequests(Array.isArray(data) ? data : []);
         }
       } catch (error) {
         console.error('Error al obtener las solicitudes:', error);
-        setRequests([]);
+      }
+    };
+
+    const fetchCompanies = async () => {
+      try {
+        const response = await api.get('/company', {
+          headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` }
+        });
+        setCompanies(response.data.data);
+      } catch (error) {
+        console.error('Error al obtener las compañías:', error);
       }
     };
 
     if (isAuthenticated && role === 'student') {
       fetchRequests();
+      fetchCompanies();
     }
   }, [isAuthenticated, role]);
 
@@ -52,7 +60,7 @@ const RequestList: React.FC = () => {
   };
 
   const toggleRequestInfo = async (id: number) => {
-    if (selectedRequest && selectedRequest.id === id) {
+    if (selectedRequest?.id === id) {
       setSelectedRequest(null);
     } else {
       try {
@@ -61,13 +69,11 @@ const RequestList: React.FC = () => {
         const studentResponse = await getStudentById(requestData.student_id);
         requestData.student = studentResponse;
         setSelectedRequest(requestData);
-        console.log('Solicitud seleccionada:', requestData);
       } catch (error) {
         console.error("Error al obtener la solicitud:", error);
       }
     }
     setIsEditing(false);
-    setIsCreating(false);
   };
 
   const handleEditClick = async (id: number) => {
@@ -83,14 +89,24 @@ const RequestList: React.FC = () => {
 
   const handleSave = async () => {
     try {
-      await updateRequest(selectedRequest.id, { question: selectedRequest.question });
-      setRequests(requests.map(request => request.id === selectedRequest.id ? selectedRequest : request));
+      await updateRequest(selectedRequest.id, {
+        question: selectedRequest.question,
+        company_id: selectedRequest.company_id,
+      });
+  
+      // Vuelve a obtener la lista de solicitudes actualizada
+      const userId = localStorage.getItem('userId');
+      if (userId) {
+        const response = await getStudentRequests(userId);
+        setRequests(Array.isArray(response.data) ? response.data : []);
+      }
+  
       setIsEditing(false);
       setSelectedRequest(null);
       setErrors({});
     } catch (error: any) {
       console.error("Error al guardar la solicitud:", error);
-      if (error.response && error.response.data && error.response.data.errors) {
+      if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       }
     }
@@ -118,7 +134,7 @@ const RequestList: React.FC = () => {
                 </button>
               </div>
             </div>
-            {selectedRequest && selectedRequest.id === request.id && (
+            {selectedRequest?.id === request.id && (
               <div className="mt-4 p-6 bg-gray-50 rounded-lg border border-gray-300">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col">
@@ -134,12 +150,27 @@ const RequestList: React.FC = () => {
                   </div>
                   <div className="flex flex-col">
                     <label className="text-gray-700 font-semibold">Compañía:</label>
-                    <input
-                      type="text"
-                      value={selectedRequest.company?.name || ""}
-                      className="border border-gray-300 rounded p-2 mt-1"
-                      disabled
-                    />
+                    {isEditing ? (
+                      <select
+                        value={selectedRequest.company_id || ""}
+                        onChange={(e) => handleEditChange(e, "company_id")}
+                        className="border border-gray-300 rounded p-2 mt-1"
+                      >
+                        <option value="">Seleccione una compañía</option>
+                        {companies.map((company) => (
+                          <option key={company.id} value={company.id}>
+                            {company.name}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type="text"
+                        value={selectedRequest.company?.name || ""}
+                        className="border border-gray-300 rounded p-2 mt-1"
+                        disabled
+                      />
+                    )}
                   </div>
                   <div className="flex flex-col">
                     <label className="text-gray-700 font-semibold">Estudiante:</label>

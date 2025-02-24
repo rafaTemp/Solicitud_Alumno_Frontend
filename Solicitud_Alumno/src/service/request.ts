@@ -47,7 +47,7 @@ export const createRequest = async (studentId: string, companyId: string, questi
 
 export const updateRequest = async (id: string, requestData: any) => {
   try {
-    const response = await api.put(`/request/${id}`, requestData, {
+    const response = await api.put(`/requests/${id}`, requestData, { // <-- Corrección aquí
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getAuthToken()}`
