@@ -4,7 +4,7 @@ const getAuthToken = () => localStorage.getItem('authToken');
 
 export const getStudentRequests = async (studentId: string) => {
   try {
-    const response = await api.get(`/students/${studentId}/requests`, {
+    const response = await api.get(`/student/${studentId}/requests`, {
       headers: { Authorization: `Bearer ${getAuthToken()}` }
     });
     return response.data;
