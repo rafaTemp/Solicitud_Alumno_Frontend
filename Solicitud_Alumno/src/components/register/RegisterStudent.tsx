@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../service/authServide';
+import toast from 'react-hot-toast';
 
 export default function Register() {
   const [type] = useState('student'); // Siempre es 'student'
@@ -33,9 +34,11 @@ export default function Register() {
     try {
       const data = await registerUser(name, email, password, dni, type, group, course); 
       console.log('Usuario registrado:', data);
+      toast.success('Usuario registrado');
       navigate('/login');
     } catch (error) {
       setError('Error en el registro');
+      toast.error('Error en el registro');
       console.error('Error en el registro:', error);
     }
   };

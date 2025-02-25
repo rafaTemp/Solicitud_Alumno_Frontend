@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteStudent, getStudents, updateStudent, getStudentById, createStudent, getStudentRequests } from "../../service/studentService";
 import { useAuth } from "../login/AuthContexType";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import toast, { Toaster } from "react-hot-toast";
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<any[]>([]);
@@ -31,11 +32,16 @@ const StudentList: React.FC = () => {
   }, [isAuthenticated, role, navigate]);
 
   const handleDelete = async (id: number) => {
-    try {
-      await deleteStudent(id);
-      setStudents(students.filter(student => student.id !== id));
-    } catch (error) {
-      console.error("Error al eliminar el estudiante:", error);
+    const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este estudiante?");
+    if (confirmDelete) {
+      try {
+        await deleteStudent(id);
+        setStudents(students.filter(student => student.id !== id));
+        toast.success("Estudiante eliminado con éxito", { duration: 2000 });
+      } catch (error) {
+        console.error("Error al eliminar el estudiante:", error);
+        toast.error("Error al eliminar el estudiante", { duration: 2000 });
+      }
     }
   };
 
@@ -78,10 +84,12 @@ const StudentList: React.FC = () => {
         console.log("Datos que se envían al servidor para crear:", newStudent);
         const savedStudent = await createStudent(newStudent);
         setStudents([...students, savedStudent]);
-        window.location.reload(); // Recargar la página después de crear un nuevo estudiante
+        window.location.reload();
+        toast.success("Estudiante creado con éxito", { duration: 2000 });
       } else {
         await updateStudent(selectedStudent.id, selectedStudent);
         setStudents(students.map(student => student.id === selectedStudent.id ? selectedStudent : student));
+        toast.success("Estudiante actualizado con éxito", { duration: 2000 });
       }
       setIsEditing(false);
       setIsCreating(false);
@@ -89,9 +97,10 @@ const StudentList: React.FC = () => {
       setErrors({});
     } catch (error: any) {
       console.error("Error al guardar el estudiante:", error);
-      if (error.response && error.response.data && error.response.data.errors) {
+      if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       }
+      toast.error("Error al guardar el estudiante", { duration: 2000 });
     }
   };
 
@@ -194,7 +203,6 @@ const StudentList: React.FC = () => {
                     <span className="text-lg font-semibold ">{request.company.name}</span>
                     <span className="text-gray-600">{request.question}</span>
                   </div>
-               
                 </li>
               ))}
             </ul>

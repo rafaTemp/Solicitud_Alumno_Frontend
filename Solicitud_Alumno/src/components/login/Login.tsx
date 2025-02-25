@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContexType';
 import { loginUser } from '../../service/authServide';
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ export default function Login() {
     try {
       const data = await loginUser(email, password, role);
       console.log('Usuario autenticado:', data);
+      toast.success('Usuario autenticado');
 
       // Almacenar el token y el rol en localStorage
       localStorage.setItem('authToken', data.token);

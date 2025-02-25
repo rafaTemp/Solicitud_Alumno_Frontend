@@ -4,6 +4,7 @@ import { useAuth } from '../login/AuthContexType';
 import { getCompanies, getCompanyById, createCompany, updateCompany, deleteCompany } from '../../service/companyService';
 import { ICompany } from '../../interfaces/ICompany';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 const CompanyList: React.FC = () => {
   const [companies, setCompanies] = useState<ICompany[]>([]);
@@ -29,6 +30,7 @@ const CompanyList: React.FC = () => {
           setCompanies([]);
         }
       } catch (error) {
+        toast.error("Error al obtener las compañías");
         console.error("Error al obtener las compañías:", error);
         setCompanies([]);
       }
@@ -41,6 +43,7 @@ const CompanyList: React.FC = () => {
       await deleteCompany(id);
       setCompanies(companies.filter(company => company.id !== id));
     } catch (error) {
+      toast.error("Error al eliminar la compañía");
       console.error("Error al eliminar la compañía:", error);
     }
   };
@@ -53,8 +56,10 @@ const CompanyList: React.FC = () => {
         const company = await getCompanyById(id);
         
         setSelectedCompany(company);
+        toast.success('Empresa seleccionada');
         console.log("Datos de la empresa seleccionada:", company);
       } catch (error) {
+        toast.error('Error al obtener la empresa');
         console.error('Error al obtener la empresa:', error);
       }
     }
@@ -85,7 +90,8 @@ const CompanyList: React.FC = () => {
           website: selectedCompany?.website ?? '',
           NIF: selectedCompany?.NIF ?? ''
         };
-        console.log("Datos que se envían al servidor para crear:", newCompany);
+        
+        toast.success('Empresa creada');
         const savedCompany = await createCompany(newCompany);
         setCompanies([...companies, savedCompany]);
         window.location.reload(); // Recargar la página después de crear una nueva empresa
@@ -100,6 +106,7 @@ const CompanyList: React.FC = () => {
       setSelectedCompany(null);
       setErrors({});
     } catch (error: any) {
+      toast.error("Error al guardar la compañía");
       console.error("Error al guardar la compañía:", error);
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
