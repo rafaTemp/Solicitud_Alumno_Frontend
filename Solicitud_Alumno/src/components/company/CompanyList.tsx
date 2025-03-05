@@ -6,6 +6,7 @@ import { ICompany } from '../../interfaces/ICompany';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
+
 const CompanyList: React.FC = () => {
   const [companies, setCompanies] = useState<ICompany[]>([]);
   const [selectedCompany, setSelectedCompany] = useState<ICompany | null>(null);

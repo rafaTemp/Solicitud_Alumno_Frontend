@@ -26,7 +26,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* CompanyList ahora es pública */}
-        <Route path="/company" element={<CompanyList onCompaniesLoaded={() => { } } />} />
+        <Route path="/company" element={<CompanyList />} />
         <Route path="/request" element={<RequestList />} />
         {/* Request solo accesible para estudiantes */}
 
