@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerTeacher, registerUser } from '../../service/authServide';
+import { registerTeacher } from '../../service/authServide';
 import toast from 'react-hot-toast';
 
 export default function RegisterTeacher() {
