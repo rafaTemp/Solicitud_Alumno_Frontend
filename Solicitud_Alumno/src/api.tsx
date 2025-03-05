@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://docvalle.duckdns.org:8080/api',
+  baseURL: 'http://docvalle.duckdns.org/api',
   //baseURL: 'http://127.0.0.1:8000/api',
   withCredentials: true, // Esto es crucial para usar cookies con Sanctum
 });
