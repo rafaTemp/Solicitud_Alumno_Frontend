@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { deleteStudent, getStudents, updateStudent, getStudentById, createStudent, getStudentRequests } from "../../service/studentService";
 import { useAuth } from "../login/AuthContexType";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import toast, { Toaster } from "react-hot-toast";
+import toast  from "react-hot-toast";
+
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<any[]>([]);
