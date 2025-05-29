@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
       return (
         <>
           <Link to="/request" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Solicitudes</Link>
-          <Link to="/perfil" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Perfil</Link>
+          <Link to="/profile" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Perfil</Link>
         </>
       );
     }
@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
           <Link to="/company" className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Empresas</Link>
           <Link to="/teacherRegister" className="text-blue-600 hover:text-blue-800 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Nuevo Profesor</Link>
 
-          
+
         </>
       );
     }
@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
         <div className="relative flex justify-between h-16">
           <div className="flex-1 flex items-center sm:items-stretch sm:justify-start">
             <button onClick={handleLogoClick} className="text-xl font-bold text-gray-900 flex items-center">
-            <img src="\logo.png" alt="Logo" className="h-8 w-8 mr-2" />
+              <img src="\logo.png" alt="Logo" className="h-8 w-8 mr-2" />
               Solicitud Alumnos
             </button>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -106,7 +106,11 @@ const Navbar: React.FC = () => {
               </button>
               {profileMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
-                  <Link to="/perfil" className="block px-4 py-2 text-sm text-gray-700">Your Profile</Link>
+                  {role === 'student' && (
+                    <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700">
+                      Your Profile
+                    </Link>
+                  )}
                   <button
                     onClick={handleLogout}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

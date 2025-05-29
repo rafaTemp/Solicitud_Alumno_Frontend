@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { deleteStudent, getStudents, updateStudent, getStudentById, createStudent, getStudentRequests } from "../../service/studentService";
 import { useAuth } from "../login/AuthContexType";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import toast  from "react-hot-toast";
-
+import toast from "react-hot-toast";
+import api from "../../api"; // Asegúrate de tener tu instancia de axios aquí
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<any[]>([]);
@@ -13,6 +13,7 @@ const StudentList: React.FC = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [errors, setErrors] = useState<any>({});
+  const [cvFile, setCvFile] = useState<File | null>(null);
   const { isAuthenticated, role } = useAuth();
   const navigate = useNavigate();
 
@@ -52,12 +53,16 @@ const StudentList: React.FC = () => {
       setStudentRequests([]);
     } else {
       try {
-        const student = await getStudentById(id);
+        // getStudentById debe devolver { student: {...}, cv_url: "..." }
+        const studentRes = await getStudentById(id);
+        const student = studentRes.student || studentRes;
         const requests = await getStudentRequests(id);
-        setSelectedStudent(student);
+        setSelectedStudent({
+          ...student,
+          cv_url: studentRes.cv_url, // añade el enlace al PDF
+        });
         setStudentRequests(requests);
-        console.log("selectedStudent", student);
-        console.log("studentRequests", requests);
+        setCvFile(null);
       } catch (error) {
         console.error("Error al obtener el estudiante:", error);
       }
@@ -75,27 +80,45 @@ const StudentList: React.FC = () => {
   };
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
-    setSelectedStudent({ ...selectedStudent, [field]: e.target.value });
+    if (field === "CV" && e.target instanceof HTMLInputElement && e.target.files) {
+      setCvFile(e.target.files[0]);
+    } else {
+      setSelectedStudent({ ...selectedStudent, [field]: e.target.value });
+    }
   };
 
   const handleSave = async () => {
     try {
       if (isCreating) {
         const newStudent = { ...selectedStudent };
-        console.log("Datos que se envían al servidor para crear:", newStudent);
         const savedStudent = await createStudent(newStudent);
         setStudents([...students, savedStudent]);
         window.location.reload();
         toast.success("Estudiante creado con éxito", { duration: 2000 });
       } else {
-        await updateStudent(selectedStudent.id, selectedStudent);
-        setStudents(students.map(student => student.id === selectedStudent.id ? selectedStudent : student));
+        // Editar estudiante con FormData (igual que en profile)
+        const formData = new FormData();
+        formData.append('name', selectedStudent.name ?? '');
+        formData.append('email', selectedStudent.email ?? '');
+        formData.append('dni', selectedStudent.dni ?? '');
+        formData.append('group', selectedStudent.group ?? '');
+        formData.append('course', selectedStudent.course ?? '');
+        formData.append('password', selectedStudent.password ?? '');
+        if (cvFile) {
+          formData.append('CV', cvFile);
+        }
+        formData.append('_method', 'PUT');
+        await api.post(`/student/${selectedStudent.id}`, formData);
         toast.success("Estudiante actualizado con éxito", { duration: 2000 });
+        setCvFile(null);
+        setIsEditing(false);
+        setIsCreating(false);
+        setSelectedStudent(null);
+        setErrors({});
+        // Refresca la lista
+        const data = await getStudents();
+        setStudents(data);
       }
-      setIsEditing(false);
-      setIsCreating(false);
-      setSelectedStudent(null);
-      setErrors({});
     } catch (error: any) {
       console.error("Error al guardar el estudiante:", error);
       if (error.response?.data?.errors) {
@@ -110,6 +133,7 @@ const StudentList: React.FC = () => {
     setIsCreating(true);
     setIsEditing(false);
     setErrors({});
+    setCvFile(null);
   };
 
   return (
@@ -188,6 +212,31 @@ const StudentList: React.FC = () => {
                 <option value="26/27">26/27</option>
               </select>
               {errors.course && <span className="text-red-500 text-sm">{errors.course}</span>}
+            </div>
+            {/* Input para el archivo PDF */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-semibold">Currículum (PDF):</label>
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={e => handleEditChange(e, "CV")}
+                className="border border-gray-300 rounded p-2 mt-1"
+                disabled={!isEditing}
+              />
+              {/* Mostrar enlace al currículum si existe */}
+              {selectedStudent.cv_url && (
+                <div className="mt-2">
+                  <a
+                    href={selectedStudent.cv_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline"
+                  >
+                    Ver currículum PDF
+                  </a>
+                </div>
+              )}
+              {errors.CV && <span className="text-red-500 text-sm">{errors.CV}</span>}
             </div>
           </div>
           {isEditing && (

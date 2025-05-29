@@ -12,6 +12,7 @@ import {Toaster} from 'react-hot-toast';
 import CreateRequest from './components/request/CreateRequest';
 import RegisterTeacher from './components/register/Registerteacher';
 import Register from './components/register/RegisterStudent';
+import Profile from './components/profile';
 
 
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="requests/create" element={<PrivateRoute element={<CreateRequest />} requiredRole="student" />} />
         <Route path="/teacherRegister" element={<RegisterTeacher />} />
         <Route path="/" element={<Navigate to="/login" />} />
+         <Route path="/profile" element={<Profile />} />
       </Routes>
 
 
