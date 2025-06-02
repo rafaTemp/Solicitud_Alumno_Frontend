@@ -13,6 +13,8 @@ import CreateRequest from './components/request/CreateRequest';
 import RegisterTeacher from './components/register/Registerteacher';
 import Register from './components/register/RegisterStudent';
 import Profile from './components/profile';
+import Dashboard from './components/Dashboard/Dashboard';
+import AllRequests from './components/request/AllRequest';
 
 
 
@@ -36,6 +38,8 @@ function App() {
         <Route path="/teacherRegister" element={<RegisterTeacher />} />
         <Route path="/" element={<Navigate to="/login" />} />
          <Route path="/profile" element={<Profile />} />
+         <Route path="/dashboard" element={<Dashboard />} />
+         <Route path="/requests" element={<AllRequests />} />
       </Routes>
 
 
