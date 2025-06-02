@@ -1,50 +1,59 @@
-# React + TypeScript + Vite
+# Solicitud Alumno - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es el frontend de la aplicación **Solicitud Alumno**, desarrollado en React + TypeScript + Vite.
 
-Currently, two official plugins are available:
+## Requisitos previos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js (recomendado v18 o superior)
+- npm (v9 o superior) o yarn
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. **Clona el repositorio:**
 
-- Configure the top-level `parserOptions` property like this:
+   ```bash
+   git clone https://github.com/tu-usuario/tu-repo.git
+   cd Solicitud_Alumno_Frontend/Solicitud_Alumno
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+2. **Instala las dependencias:**
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+   ```bash
+   npm install
+   # o si usas yarn
+   # yarn install
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+3. **Configura las variables de entorno:**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+   Crea un archivo `.env` en la raíz del proyecto y añade la URL de tu backend, por ejemplo:
+
+   ```
+   VITE_API_URL=http://localhost:8000/api
+   ```
+
+4. **Inicia el servidor de desarrollo:**
+
+   ```bash
+   npm run dev
+   # o
+   # yarn dev
+   ```
+
+   El frontend estará disponible en [http://localhost:5173](http://localhost:5173) por defecto.
+
+## Scripts útiles
+
+- `npm run dev` — Inicia el servidor de desarrollo con recarga en caliente.
+- `npm run build` — Genera la versión optimizada para producción.
+- `npm run preview` — Previsualiza la build de producción localmente.
+- `npm run lint` — Ejecuta el linter para comprobar la calidad del código.
+
+## Notas
+
+- Asegúrate de que el backend esté funcionando y accesible desde el frontend.
+- Si cambias el puerto del backend o frontend, actualiza las URLs en el archivo `.env`.
+
+---
+
+¡Listo! Ya puedes empezar a desarrollar o probar la aplicación.
